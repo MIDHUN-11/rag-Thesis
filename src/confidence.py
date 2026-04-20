@@ -9,4 +9,5 @@ class ConfidenceScorer:
         if len(scores) == 0:
             return 0.0
 
-        return sum(scores) / len(scores)
+        # Use max instead of avg (more stable)
+        return max(scores)

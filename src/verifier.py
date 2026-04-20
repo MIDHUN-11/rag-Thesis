@@ -8,13 +8,23 @@ class Verifier:
         )
 
     def check_entailment(self, doc, answer):
-        result = self.nli(f"{doc} </s></s> {answer}")
+        result = self.nli({
+            "text": doc,
+            "text_pair": answer
+        })
 
-        r = result[0]
+        # 🔥 Handle both dict and list outputs
+        if isinstance(result, list):
+            r = result[0]
+        else:
+            r = result
+
         label = r["label"]
         score = r["score"]
 
         if label in ["ENTAILMENT", "LABEL_2"]:
             return score
-        else:
-            return 0.0
+        elif label in ["NEUTRAL", "LABEL_1"]:
+            return score * 0.3
+        else:  # contradiction
+            return -score
