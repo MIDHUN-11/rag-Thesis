@@ -13,7 +13,7 @@ class Verifier:
             "text_pair": answer
         })
 
-        # 🔥 Handle both dict and list outputs
+        # Handle both dict and list outputs
         if isinstance(result, list):
             r = result[0]
         else:
@@ -27,4 +27,4 @@ class Verifier:
         elif label in ["NEUTRAL", "LABEL_1"]:
             return score * 0.3
         else:  # contradiction
-            return -score
+            return 0.0
